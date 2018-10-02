@@ -1,0 +1,104 @@
+<section>
+
+    <section>
+        <h2>Les fonctions d'agrégation</h2>
+    </section>
+
+    <section>
+        <h3>Liste des principales fonctions d'agrégation</h3>
+        <p>Les fonctions d'agrégation permettent d'effectuer des statistiques sur un ensemble de données.</p>
+        <p>Ces fonctions sont utilisées dans la clause SELECT et effectue un regroupement de l'ensemble des données retournées.</p>
+        <table>
+            <thead>
+            <tr>
+                <td>Fonction</td>
+                <td>Description</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>COUNT</td>
+                <td>Compter le nombre de lignes retournées par la requête</td>
+            </tr>
+            <tr>
+                <td>SUM</td>
+                <td>Faire la somme des valeurs d’un champ</td>
+            </tr>
+            <tr>
+                <td>FIRST</td>
+                <td>Retourner le 1er résultat</td>
+            </tr>
+            <tr>
+                <td>LAST</td>
+                <td>Retourner le dernier résultat</td>
+            </tr>
+            <tr>
+                <td>MAX</td>
+                <td>Retourner la valeur maximale d’un champ</td>
+            </tr>
+            <tr>
+                <td>MIN</td>
+                <td>Retourner la valeur minimale d’un champ</td>
+            </tr>
+            <tr>
+                <td>AVG</td>
+                <td>Retourner la valeur moyenne d’un champ</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h3>Exercices</h3>
+        <div class="instructions">
+            <ol>
+                <li>Rechercher le nombre d’utilisateurs présent dans la base de données</li>
+                <li>Rechercher le nombre total de commandes réalisées cette année</li>
+                <li>Rechercher le prix moyen des produits en stock</li>
+                <li>Rechercher le prix du produit le plus cher en stock</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>la clause GROUP BY</h3>
+        <p>La clause GROUP BY, située après la clause ORDER BY, nous permettra de définir sur quel(s) champ(s) effectuer un regroupement.</p>
+        <p>Cette clause est très souvent utilisée en complément de fonctions d'agrégations pour permettre de retourner plusieurs lignes.</p>
+        <pre><code class="language-sql">SELECT *
+FROM ma_table
+GROUP BY colonne_1, colonne_2</code></pre>
+    </section>
+
+    <section>
+        <h3>Exercices</h3>
+        <div class="instructions">
+            <ol>
+                <li>Rechercher la liste des moyens de paiement avec le nombre de commandes associé</li>
+                <li>Rechercher la liste des commandes en affichant le nombre de produits et le montant total de la commande</li>
+                <li>Rechercher l'utilisateur ayant dépensé le plus d'argent</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>la clause HAVING</h3>
+        <p>La clause HAVING, située après la clause GROUP BY, nous permettra d'effectuer une restriction sur le résultat d'une fonction d'agrégation.</p>
+        <p>La clause WHERE permet de filtrer les résultats <strong>AVANT</strong> l'opération d'agrégation tandis que la clause HAVING intervient <strong>APRES</strong>.</p>
+        <pre><code class="language-sql">SELECT COUNT(*) AS NbElements
+FROM ma_table
+GROUP BY colonne_1
+HAVING NbElements = 2</code></pre>
+    </section>
+
+    <section>
+        <h3>Exercices</h3>
+        <div class="instructions">
+            <ol>
+                <li>Rechercher la liste des utilisateurs ayant réalisés plus de 6 commandes</li>
+                <li>Rechercher la liste des commandes ayant un montant supérieur à 2000€</li>
+                <li>Rechercher la liste des moyens de paiements utilisés par des utilisateurs ayant une moyenne d'âge inférieur à 34 ans</li>
+            </ol>
+        </div>
+    </section>
+
+</section>

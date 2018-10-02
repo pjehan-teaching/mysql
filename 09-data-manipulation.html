@@ -1,0 +1,35 @@
+<section id="data-manipulation">
+
+    <section>
+        <h2>Manipuler les données</h2>
+    </section>
+
+    <section>
+        <h3>Insert</h3>
+        <p>Vous pouvez insérer des données dans une table en utilisant une requête INSERT INTO :</p>
+<pre><code class="language-sql">INSERT INTO ma_table (id, nom, prenom) VALUES (1, 'Dupont', 'Jean');
+INSERT INTO ma_table (id, nom, prenom) VALUES (1, 'Dupont', 'Jean'), (2, 'Dupont', 'Eric');</code></pre>
+        <footer>
+            <a href="#" class="warning" style="font-size: 0.6em;">L'erreur "Duplicate entry for primary key" signifie que vous avez inséré 2 fois la même clé primaire</a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Update</h3>
+        <p>Vous pouvez modifier des données en utilisant une requête UPDATE :</p>
+        <pre><code class="language-sql">UPDATE ma_table SET nom = 'Dupont' WHERE id = 2</code></pre>
+        <footer>
+            <a href="#" class="danger" style="font-size: 0.8em;">N'oubliez pas la clause WHERE sinon l'ensemble des données seront modifiées</a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Delete</h3>
+        <p>Vous pouvez supprimer des données en utilisant une requête UPDATE :</p>
+        <pre><code class="language-sql">DELETE FROM ma_table WHERE id = 2</code></pre>
+        <footer>
+            <a href="#" class="danger" style="font-size: 0.8em;">N'oubliez pas la clause WHERE sinon l'ensemble des données seront supprimées</a>
+        </footer>
+    </section>
+
+</section>

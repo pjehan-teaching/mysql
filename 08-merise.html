@@ -1,0 +1,140 @@
+<section>
+
+    <section>
+        <h2>Merise</h2>
+    </section>
+
+    <section>
+        <h3>Définition</h3>
+        <blockquote cite="https://fr.wikipedia.org/wiki/Merise_(informatique)">
+            <p>Merise est une méthode d'analyse, de conception et de gestion de projet informatique.</p>
+            <cite >Wikipedia</cite>
+        </blockquote>
+        <p>La méthode d'analyse Merise dispose de deux méthodes de représentation des données intéressantes pour la conception de base de données.</p>
+    </section>
+
+    <section>
+        <h3>MCD (Modèle Conceptuel de Données)</h3>
+        <p>Un MCD va permettre de représenter les différentes <strong>entités</strong> d'un système ainsi que les <strong>associations</strong> entre ces entités.</p>
+        <p>Une entité va représenter un objet de gestion (une voiture, une personne, une facture, une entreprise...) tandis qu'une association va représenter un lien entre deux entités (conduit, paye, rédige...).</p>
+    </section>
+
+    <section>
+        <h3>Entité</h3>
+        <p>Une entité aura un nom, un identifiant ainsi que des propriétés.</p>
+        <img src="assets/images/mcd-entite.png" alt="Entité">
+    </section>
+
+    <section>
+        <h3>Association</h3>
+        <p>Une association aura un nom ainsi qu'une liste optionnelle de données incluses dans l'association.</p>
+        <img src="assets/images/mcd-association.png" alt="Association">
+    </section>
+
+    <section>
+        <h3>Cardinalité</h3>
+        <p>Nous allons également préciser sur chaque association les cardinalités.</p>
+        <ul>
+            <li><strong>0,1</strong> : Présence 0 ou 1 fois</li>
+            <li><strong>0,N</strong> : Présence 0 ou plusieurs fois</li>
+            <li><strong>1,1</strong> : Présence obligatoire 1 seule fois</li>
+            <li><strong>1,N</strong> : Présence obligatoire 1 ou plusieurs fois</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Cardinalité</h3>
+        <p>Les cardinalités se lisent de la façon suivante :</p>
+        <ul>
+            <li>Un Auteur peut rédiger 0 ou plusieurs Livres</li>
+            <li>Un Livre peut être rédigé par 1 ou plusieurs Auteurs</li>
+            <li>Un Livre peut être édité par 1 seul Editeur</li>
+            <li>Un Editeur peut éditer 0 ou plusieurs Livres</li>
+        </ul>
+        <img src="assets/images/mcd-livre.png" alt="MCD Livre">
+    </section>
+
+    <section>
+        <h3>Exercice</h3>
+        <div class="instructions">
+            <div>
+                <p>Réalisez le MCD d'une application pour un cabinet médical en suivant les règles de gestion suivantes :</p>
+                <ol>
+                    <li>Une consultation est réalisée à une heure précise par un médecin</li>
+                    <li>Lors d'une consultation, un médecin ne peut prendre qu'un seul patient à la fois</li>
+                    <li>Lors d'une consultation, un médecin peut éventuellement préscrire des médicaments au patient</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>MLD (Modèle Logique des Données)</h3>
+        <p>Un MLD peut être généré à partir d'un MCD. Il permettra de représenter shématiquement les <strong>tables</strong> à créer dans une base de données.</p>
+        <p>On ne parlera alors plus d'entités mais de <strong>tables</strong>, les identifiants deviennent des <strong>clés</strong> et les attributs des <strong>colonnes</strong>.</p>
+        <p>Pour effectuer la transition, nous allons appliquer un certain nombre de changements...</p>
+    </section>
+
+    <section>
+        <h3>Passage du MCD au MLD</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Entité A</th>
+                <th>Entité B</th>
+                <th>Résultat</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>0,1 ou 1,1</td>
+                <td>0,N ou N,N</td>
+                <td>Création d'une clé étrangère dans l'entité A</td>
+            </tr>
+            <tr>
+                <td>0,N ou 1,N</td>
+                <td>0,N ou N,N</td>
+                <td>La relation entre les entités est transformée en table</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="container">
+            <div class="col">
+                <img src="assets/images/mcd-livre.png" alt="MCD">
+            </div>
+            <div class="col">
+                <img src="assets/images/mld-livre.png" alt="MLD">
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Exercice</h3>
+        <div class="instructions">
+            <div>
+                <p>Réalisez le MCD puis le MLD d'une application de gestion d'une école en suivant les règles de gestion suivantes :</p>
+                <ol>
+                    <li>Un étudiant peut être dans une classe différente chaque année</li>
+                    <li>Une classe peut assister à plusieurs cours dans l'année mais il ne peut y avoir qu'une seule classe par cours</li>
+                    <li>Un enseignant peut donner plusieurs cours dans l'année mais il ne peut y avoir qu'un seul enseignant par cours</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Exercice</h3>
+        <div class="instructions">
+            <div>
+                <p>Réalisez le MCD puis le MLD d'une application de gestion d'une concession automobile en suivant les règles de gestion suivantes :</p>
+                <ol>
+                    <li>Chaque agence est gérée par un et un seul représentant</li>
+                    <li>Plusieurs commerciaux peuvent travailler dans une même agence</li>
+                    <li>Chaque agence dispose d'un parc de voitures disponibles</li>
+                    <li>Les voitures peuvent être transférées entre les différentes agences et l'entreprise souhaiterait garder un historique des ces transferts.</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+</section>

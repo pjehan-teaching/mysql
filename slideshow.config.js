@@ -1,3 +1,4 @@
 module.exports = {
-  name: 'MySQL'
+  name: 'MySQL',
+  stylesheets: ['assets/css/style.css']
 }

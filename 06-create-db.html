@@ -1,0 +1,201 @@
+<section id="create-db">
+
+    <section>
+        <h2>Créer une base de données</h2>
+    </section>
+
+    <section>
+        <h3>Créer une base de données</h3>
+        <pre class="line-numbers"><code class="language-sql">CREATE DATABASE ma_base CHARACTER SET 'utf8' COLLATE 'utf8mb4_general_ci';
+
+DROP DATABASE IF EXISTS ma_base;
+</code></pre>
+    </section>
+
+    <section>
+        <h3>Types de données - Chaînes de caractères</h3>
+        <table>
+            <tr>
+                <td>CHAR</td>
+                <td>Chaine de caractères (string) de taille fixe (ajoute des espaces si plus petit). De 0 à 255
+                    caractères
+                </td>
+            </tr>
+            <tr>
+                <td>VARCHAR</td>
+                <td>Chaine de caractères (string) de taille variable. de 0 à 255 caractères (au dessus, choisir type
+                    TEXT)
+                </td>
+            </tr>
+            <tr>
+                <td>TEXT</td>
+                <td>3 octets / de 0 à 16 777 215 caractères</td>
+            </tr>
+            <tr>
+                <td>LONGTEXT</td>
+                <td>32 octets / de 0 à 4 294 967 295 caractères</td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h3>Types de données - Valeurs numériques</h3>
+        <table>
+            <tr>
+                <td>TINYINT</td>
+                <td>1 octet / de 0 à 255 (UNSIGNED)</td>
+            </tr>
+            <tr>
+                <td>SMALLINT</td>
+                <td>2 octets / de 0 à 65535 (UNSIGNED)</td>
+            </tr>
+            <tr>
+                <td>MEDIUMINT</td>
+                <td>3 octets / de 0 à 16777215 (UNSIGNED)</td>
+            </tr>
+            <tr>
+                <td>INT</td>
+                <td>4 octets / de 0 à 4294967295 (UNSIGNED)</td>
+            </tr>
+            <tr>
+                <td>BIGINT</td>
+                <td>8 octets / de 0 à 18446744073709551615 (UNSIGNED)</td>
+            </tr>
+            <tr>
+                <td>FLOAT</td>
+                <td>4 octets / Calculs scientifiques</td>
+            </tr>
+            <tr>
+                <td>DOUBLE</td>
+                <td>8 octets / Calculs scientifiques</td>
+            </tr>
+            <tr>
+                <td>DECIMAL</td>
+                <td>16 octets / Calculs financiers</td>
+            </tr>
+            <tr>
+                <td>BOOLEAN</td>
+                <td>1 byte / 0 ou 1</td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h3>Types de données - Date</h3>
+        <table>
+            <tr>
+                <td>DATE</td>
+                <td>3 octets / YYYY-MM-DD</td>
+            </tr>
+            <tr>
+                <td>TIME</td>
+                <td>3 octets / HH:MM:SS</td>
+            </tr>
+            <tr>
+                <td>DATETIME</td>
+                <td>8 octets / YYYY-MM-DD HH:MM:SS</td>
+            </tr>
+            <tr>
+                <td>YEAR</td>
+                <td>1 octet / YYYY</td>
+            </tr>
+            <tr>
+                <td>TIMESTAMP</td>
+                <td>4 octets / Nombre de secondes depuis le 1er Janvier 1970</td>
+            </tr>
+        </table>
+    </section>
+    
+    <section>
+        <h3>Table</h3>
+        <ul>
+            <li>Combien de colonnes ?</li>
+            <li>Quels types ?</li>
+            <li>Peut être NULL ?</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Clé primaire (Primary Key)</h3>
+        <p>Une clé primaire permet d’identifier de façon précise un enregistrement dans une table.</p>
+        <ul>
+            <li>Contrainte d’unicité</li>
+            <li>Non porteuse d’information</li>
+            <li>Peut être composée de plusieurs champs</li>
+            <li>Ne peut pas être NULL</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Créer une nouvelle table</h3>
+        <pre class="line-numbers"><code class="language-sql">CREATE TABLE IF NOT EXISTS ma_table (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  titre VARCHAR(255) NOT NULL DEFAULT ‘Mon titre’,
+  contenu TEXT NULL,
+  prix DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (id)
+);
+</code></pre>
+    </section>
+
+    <section>
+        <h3>Créer une nouvelle table</h3>
+        <div class="instructions">
+            <ol>
+                <li>Créez une nouvelle table qui contiendra les données relatives aux utilisateurs.</li>
+                <li>
+                    <p>Créez les colonnes nécéssaires pour stocker les données suivantes :</p>
+                    <ul>
+                        <li>Nom</li>
+                        <li>Prénom</li>
+                        <li>Civilité (Monsieur par défaut)</li>
+                        <li>Age</li>
+                        <li>Nombre de message</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>Modifier une table</h3>
+        <pre class="line-numbers"><code class="language-sql">-- Ajouter une nouvelle colonne
+ALTER TABLE ma_table ADD COLUMN nom_colonne VARCHAR(255) NOT NULL;
+
+-- Supprimer une colonne
+ALTER TABLE ma_table DROP COLUMN nom_colonne;
+
+-- Changer le nom d'une colonne et les propriétés d'une colonne
+ALTER TABLE ma_table CHANGE nom_colonne nouveau_nom_colonne INT NULL;
+
+-- Changer les propriétés et la position d'une colonne dans la table
+-- MODIFY ne permet PAS de renommer
+ALTER TABLE ma_table MODIFY nom_colonne BOOLEAN NOT NULL DEFAULT 0 AFTER id;
+</code></pre>
+    </section>
+
+    <section>
+        <h3>Clé étrangère</h3>
+        <div class="instructions">
+            <ol>
+                <li>Créer une nouvelle table pour stocker les civilités</li>
+                <li>Modifier la table des utilisateurs pour l’associer à la table des civilités</li>
+            </ol>
+        </div>
+        <pre class="line-numbers"><code class="language-sql">ALTER TABLE ma_table
+  ADD CONSTRAINT fk_ma_table_autre_table
+  FOREIGN KEY (autre_table_id)
+  REFERENCES autre_table(id);
+
+ALTER TABLE ma_table DROP FOREIGN KEY fk_ma_table_autre_table
+</code></pre>
+    </section>
+
+    <section>
+        <h3>Intégrité référentielle</h3>
+        <p>L’intégrité référentielle est une règle permettant d’imposer des contraintes sur les associations.</p>
+        <p>Dans notre exemple précédent, on ne pourra pas supprimer une civilité si des utilisateurs y font référence.</p>
+        <p>On ne pourra pas non plus associer un utilisateur à une civilité qui n’existerait pas.</p>
+    </section>
+
+</section>

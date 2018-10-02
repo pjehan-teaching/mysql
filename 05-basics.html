@@ -1,0 +1,113 @@
+<section id="basics">
+
+    <section>
+        <h2>Prérequis</h2>
+    </section>
+
+    <section>
+        <h3>Le stockage des données</h3>
+        <p>1 octet contient 8 bits pour un total de 256 (2<sup>8</sup>) possibilités.</p>
+        <table class="table-octet">
+            <tr>
+                <td colspan="8">1 octet</td>
+            </tr>
+            <tr>
+                <td>1 bit</td>
+                <td>1 bit</td>
+                <td>1 bit</td>
+                <td>1 bit</td>
+                <td>1 bit</td>
+                <td>1 bit</td>
+                <td>1 bit</td>
+                <td>1 bit</td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h3>Jeux de caractères</h3>
+        <p>Fonctionnement binaire.</p>
+        <p>Utilisation d’une table de conversion ASCII.</p>
+        <p>ASCII fonctionne sur 7 bits (128 possibilités)</p>
+        <p>ISO-8859-1 ou Latin1 fonctionne sur 8 bits (256 possibilités)</p>
+        <p>UTF-8 fonctionne sur 7 bits + 1 octet optionnel (32768 possibilités)</p>
+        <footer>
+            <a href="http://ascii-table.com" class="info" target="_blank">http://ascii-table.com</a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Interclassement (ou collation)</h3>
+        <p>Permet d’ordonner les caractères (peut être utilisé dans la clause ORDER BY).</p>
+        <p>Permet de définir une égalité entre plusieurs caractères (utile pour les requêtes de recherche).</p>
+        <p>Généralement utilisé : UTF8mb4_general_ci</p>
+        <footer>
+            <a href="https://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html" class="info" target="_blank">UTF8mb4 permet de gérer les emojis 😊</a>
+            <a href="https://dev.mysql.com/doc/refman/8.0/en/case-sensitivity.html" class="info" target="_blank">"ci" signifie "Case Insensitive"</a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Moteurs de stockage</h3>
+        <p>MySQL permet de choisir quel moteur utiliser pour une base de données ou même spécifiquement pour une table.</p>
+        <p>Nous allons utiliser <strong>InnoDB</strong> car il permet d'assurer la cohérence des données (contraintes d'intégrité référentielle + transactions).</p>
+        <footer>
+            <a href="http://dev.mysql.com/doc/refman/8.0/en/storage-engines.html" class="info" target="_blank">Documentation sur les moteurs de stockage</a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Conventions de nommage</h3>
+        <ul>
+            <li>Ecriture des mots clés (SELECT, COUNT, FROM...) en majuscules</li>
+            <li>Les instructions sont séparées par des points virgules ";"</li>
+            <li>Ne pas utiliser d’espace ou de caractères spéciaux.</li>
+            <li>Ne pas utiliser de <a href="https://dev.mysql.com/doc/refman/8.0/en/keywords.html" target="_blank">mot clé réservé</a></li>
+            <li>Conserver le même type de nommage pour toutes les tables, les champs…</li>
+            <li>On pourra utiliser des prefix pour les noms de tables (wp_comment par exemple)</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Découpage en 4 sous langages</h3>
+        <div class="container">
+            <div class="col">
+                <h4>DDL</h4>
+                <p>Data Definition Language</p>
+                <ul>
+                    <li>CREATE</li>
+                    <li>ALTER</li>
+                    <li>DROP</li>
+                    <li>RENAME</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>DML</h4>
+                <p>Data Manipulation Language</p>
+                <ul>
+                    <li>SELECT</li>
+                    <li>INSERT</li>
+                    <li>UPDATE</li>
+                    <li>DELETE</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>DCL</h4>
+                <p>Data Control Language</p>
+                <ul>
+                    <li>GRANT</li>
+                    <li>REVOKE</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>TCM</h4>
+                <p>Transaction Control Language</p>
+                <ul>
+                    <li>COMMIT</li>
+                    <li>ROLLBACK</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</section>

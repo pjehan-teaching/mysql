@@ -1,0 +1,57 @@
+<section id="tools">
+
+    <section>
+        <h2>Outils</h2>
+    </section>
+
+    <section>
+        <h3>PhpMyAdmin</h3>
+        <div class="container">
+            <div class="col">
+                <p>PhpMyAdmin est une interface graphique permettant de gérer des bases de données.</p>
+                <p>Cette interface est réalisée en PHP et est accessible depuis un navigateur web.</p>
+                <p><a href="http://localhost/phpmyadmin" target="_blank">http://localhost/phpmyadmin</a></p>
+            </div>
+            <div class="col">
+                <img src="assets/images/phpmyadmin.svg" alt="PhpMyAdmin">
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>MySQL Workbench</h3>
+        <div class="container">
+            <div class="col" style="flex: 2;">
+                <p>MySQL Workbench est un logiciel (pas une interface web) permettant d’effectuer des <strong>actions similaires à PhpMyAdmin</strong>.</p>
+                <p>Il est cependant <strong>plus pratique</strong> pour effectuer des requêtes (coloration syntaxique, auto-complétion,  onglets...) et permet également de réaliser un <strong>schéma de base de données</strong> pour ensuite générer un script SQL.</p>
+            </div>
+            <div class="col">
+                <img src="assets/images/mysql-workbench.png" alt="MySQL Workbench">
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Paramétrer MySQL Workbench</h3>
+        <p>Aller dans les préférence du logiciel puis :</p>
+        <ul>
+            <li>"<strong>SQL Editor</strong>" : Décocher la case "<strong>Safe Updates</strong>" (il s'agit d'une sécurité permettant de bloquer l'execution des requêtes UPDATE ou DELETE sans clause WHERE)</li>
+            <li>"<strong>SQL Editor</strong>" > "<strong>Query Editor</strong>" : Cocher la case "<strong>Use UPPERCASE keywords on completion</strong>"</li>
+            <li>
+                "<strong>Modeling</strong>" > "<strong>Defaults</strong>" :
+                <ul>
+                    <li>"<strong>PK Column name</strong>" : id</li>
+                    <li>"<strong>PK Column Type</strong>" : BIGINT</li>
+                    <li>"<strong>Column Type</strong>" : VARCHAR(255)</li>
+                </ul>
+            </li>
+        </ul>
+        <p>Redémarrer ensuite le logiciel pour appliquer les paramètres.</p>
+    </section>
+
+    <section>
+        <h3>Export</h3>
+        <img src="assets/images/tools.png" alt="Export">
+    </section>
+
+</section>

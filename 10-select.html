@@ -1,0 +1,182 @@
+<section id="select">
+
+    <section>
+        <h2>Récupérer des données</h2>
+    </section>
+
+    <section>
+        <h3>Vente en ligne</h3>
+        <div class="container">
+            <div class="col" style="flex: 2;">
+                <p>Afin d'avoir des données intéressantes pour cet exercice, nous allons utiliser la base de données "vente_en_ligne".</p>
+                <p>Téléchargez les fichiers <a href="assets/files/vente_en_ligne.mwb" download>vente_en_ligne.mwb</a> et <a href="assets/files/vente_en_ligne.sql" download>vente_en_ligne.sql</a> que nous utiliserons pour la suite des exercices.</p>
+            </div>
+            <div class="col">
+                <img src="assets/images/vente_en_ligne.png" alt="Diagramme vente en ligne">
+            </div>
+        </div>
+        <p>Vous pourrez utiliser le fichier .sql pour générer la base de données et le fichier .mwb pour visualiser le diagramme de la base de données.</p>
+    </section>
+
+    <section>
+        <h3>La clause SELECT</h3>
+        <p>La clause SELECT permet de récuperer des informations.</p>
+        <p>Il est possible d'utiliser des fonctions dans cette clause pour effectuer des manipulations de données (calculs, aggrégations, formatage...)</p>
+<pre><code class="language-sql">SELECT 'Hello';
+SELECT CONCAT('Hello', ' ', 'World!')
+SELECT 2 + 2;
+SELECT NOW()</code></pre>
+        <div class="instructions">
+            <ol>
+                <li>Recherchez une fonction vous permettant de calculer une différence entre 2 dates et affichez le nombre de jours avant le nouvel an.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>La clause FROM</h3>
+        <p>La clause FROM, située après la clause SELECT, nous permettra de préciser dans quelle table rechercher des données.</p>
+        <p>Lorsqu'une table est présente dans la clause FROM, il est alors possible d'utiliser ses colonnes dans les autres clauses.</p>
+        <pre><code class="language-sql">SELECT nom, prenom
+FROM ma_table;
+
+SELECT *
+FROM ma_table;
+
+SELECT DISTINCT(nom)
+FROM ma_table;</code></pre>
+        <div class="instructions">
+            <ol>
+                <li>Recherchez la liste des familles (sans doublon)</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>La clause WHERE</h3>
+        <p>La clause WHERE, située après la clause FROM, nous permettra de filtrer les données retournées.</p>
+        <pre><code class="language-sql">SELECT *
+FROM ma_table
+WHERE nom = 'Dupont' AND date_de_naissance > '1980-01-01';</code></pre>
+        <div class="container">
+            <div class="col">
+                <h4>Opérateurs de comparaison</h4>
+                <ul>
+                    <li><strong>=</strong> : Egal à</li>
+                    <li><strong><</strong> : Inférieur à</li>
+                    <li><strong><=</strong> : Inférieur ou égal à</li>
+                    <li><strong>></strong> : Supérieur à</li>
+                    <li><strong>>=</strong> : Supérieur ou égal à</li>
+                    <li><strong>!=</strong> ou <strong><></strong> : Différent de</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>Opérateurs logiques</h4>
+                <ul>
+                    <li><strong>AND</strong> ou <strong>&&</strong> : Les 2 conditions sont vraies</li>
+                    <li><strong>OR</strong> ou <strong>||</strong> : L’une des 2 conditions est vraie</li>
+                    <li><strong>XOR</strong> : L’une des 2 conditions est vraie (mais pas les 2 en même temps)</li>
+                    <li><strong>NOT</strong> ou <strong>!</strong> : La condition est fausse</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>La clause WHERE</h3>
+        <div class="instructions">
+            <ol>
+                <li>Rechercher tous les utilisateurs qui ne sont pas de la famille "Brandon" (<strong>596 résultats</strong>).</li>
+                <li>Rechercher les utilisateurs qui sont nés dans les années 80 (<strong>96 résultats</strong>).</li>
+                <li>Rechercher les utilisateurs qui sont des hommes (<strong>298 résultats</strong>).</li>
+                <li>Rechercher les utilisateurs qui sont soit de la famille "Brandon" soit nés dans les années 80 (mais pas les 2) et qui ne sont pas des hommes. Utiliser des parenthèses pour grouper certaines conditions (<strong>50 résultats</strong>).</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>L'opérateur LIKE</h3>
+        <p>L'opérateur LIKE permet d'effectuer des recherches partielles sur des chaînes de caractères.</p>
+        <p>Le caractère <code class="language-sql">%</code> est un "wildcard" représentant zéro, un ou plusieurs caractères tandis que caractère <code class="language-sql">_</code> représente un seul caractère.</p>
+        <pre><code class="language-sql">SELECT *
+FROM ville
+WHERE libelle LIKE 'R%'; -- Villes commençant par la lettre R
+
+SELECT *
+FROM ville
+WHERE libelle LIKE '_e%'; -- Villes dont la 2nd lettre est un 'e'</code></pre>
+        <div class="instructions">
+            <ol>
+                <li>Recherchez la liste des villes commençant pas la lettre "R" (<strong>1244 résultats</strong>)</li>
+                <li>Recherchez la liste des villes contenant le mot "Rennes" (<strong>51 résultats</strong>)</li>
+                <li>Recherchez la liste des villes d'Ille-et-Vilaine (<strong>353 résultats</strong>)</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>L'opérateur BETWEEN</h3>
+        <p>L'opérateur BETWEEN permet de rechercher des données comprises entre 2 valeurs.</p>
+        <p>L'opérateur BETWEEN est <strong>inclusif</strong>.</p>
+        <pre><code class="language-sql">SELECT *
+FROM ma_table
+WHERE date_naissance BETWEEN '2012-03-09' AND '2013-09-09';</code></pre>
+        <div class="instructions">
+            <ol>
+                <li>Modifier la requête recherchant les personnes nées dans les années 80 pour utiliser BETWEEN</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>L'opérateur IN</h3>
+        <p>L'opérateur IN permet de rechercher des données comprises dans une liste.</p>
+        <p>C'est opérateur est particulièrement utile lorsqu'il est utilisé avec des sous-requêtes.</p>
+        <pre><code class="language-sql">SELECT *
+FROM ma_table
+WHERE nom IN ('Dupont', 'Briand');</code></pre>
+        <div class="instructions">
+            <ol>
+                <li>Rechercher les utilisateurs de 2 familles différentes</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>La clause ORDER BY</h3>
+        <p>La clause ORDER BY, située après la clause WHERE, nous permettra de trier les données retournées.</p>
+        <p>Il est possible de trier sur plusieurs colonnes (par exemple par nom puis par prénom).</p>
+        <p>Les opérateurs <code class="language-sql">ASC</code> et <code class="language-sql">DESC</code> permettent de trier respectivement par ordre croissant et par ordre décroissant.</p>
+        <pre><code class="language-sql">SELECT *
+FROM ma_table
+ORDER BY date_naissance, nom, prenom DESC;</code></pre>
+        <div class="instructions">
+            <ol>
+                <li>Rechercher les utilisateurs qui sont nés dans les années 80 ordonnés par date de naissance (du plus jeune au plus âgé)</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>La clause LIMIT</h3>
+        <p>La clause LIMIT, située à la fin de la requête, nous permettra de limiter le nombre de lignes retournées.</p>
+        <pre><code class="language-sql">SELECT *
+FROM ma_table
+LIMIT 10; -- Rechercher uniquement les 10 premiers résultats
+
+SELECT *
+FROM ma_table
+LIMIT 10 OFFSET 10; -- Rechercher les résultats entre 10 et 20</code></pre>
+        <div class="instructions">
+            <ol>
+                <li>Rechercher les 3 premiers utilisateurs de la table utilisateur</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>QCM</h3>
+        <a href="https://goo.gl/forms/1INkymtkl71YoW142" target="_blank">Ouvrir le QCM</a>
+    </section>
+
+</section>

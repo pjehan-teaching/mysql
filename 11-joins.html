@@ -1,0 +1,70 @@
+<section id="joins">
+
+    <section>
+        <h2>Les jointures</h2>
+    </section>
+
+    <section>
+        <h3>Le produit cartésien</h3>
+        <blockquote>
+            <p>En mathématiques, le produit cartésien de deux ensembles X et Y, appelé ensemble-produit, est l'ensemble de tous les couples dont la première composante appartient à X et la seconde à Y.</p>
+            <cite>Wikipédia</cite>
+        </blockquote>
+        <p>Pour sélectionner des données dans plusieurs tables, il est possible d'ajouter des tables dans la clause FROM en les séparants par une virgule :</p>
+        <pre><code class="language-sql">SELECT *
+FROM ma_table, autre_table;</code></pre>
+    </section>
+
+    <section>
+        <h3>Le produit cartésien</h3>
+        <pre><code class="language-sql">SELECT *
+FROM utilisateur, civilite;</code></pre>
+        <img src="assets/images/cartesian-product.png" alt="Produit cartésien">
+    </section>
+
+    <section>
+        <h3>Effectuer une jointure</h3>
+        <p>Généralement, nous souhaiterons conserver uniquement les lignes pour lesquelles la clé primaire d'une table est égale à la clé étrangère d'une autre table.</p>
+        <p>Nous pouvons pour cela préciser l'égalité dans la clause WHERE :</p>
+        <pre><code class="language-sql">SELECT *
+FROM utilisateur, civilite
+WHERE utilisateur.civ_id = civilite.id;</code></pre>
+        <footer>
+            <a href="#" class="warning" style="font-size: 0.8em;">N'oubliez pas de préciser la table associée à la colonne afin d'éviter toute ambiguïté</a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Effectuer une jointure</h3>
+        <p>Cependant, afin d'améliorer la lisibilité, nous pouvons utiliser la clause JOIN :</p>
+        <pre><code class="language-sql">-- Recherche uniquement avec correspondances
+SELECT *
+FROM ma_table
+INNER JOIN autre_table ON ma_table.autre_table_id = autre_table.id
+
+-- Recherche acceptant les valeurs NULL
+SELECT *
+FROM ma_table
+LEFT JOIN autre_table ON ma_table.autre_table_id = autre_table.id</code></pre>
+    </section>
+
+    <section>
+        <h3>Représentation des différentes jointures</h3>
+        <img src="assets/images/joins.png" alt="Représentation des jointures">
+        <footer>
+            <a href="#" class="info" style="font-size: 0.7em;">Les clauses INNER JOIN et LEFT JOIN suffisent généralement pour écrire 95% des jointures</a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Exercices</h3>
+        <div class="instructions">
+            <ol>
+                <li>Afficher la liste de l'ensemble des utilisateurs en affichant les colonnes "nom", "prenom", "libelle" (libellé de la civilité)</li>
+                <li>Afficher la liste des commandes avec le label du moyen de paiement, le nom, le prénom, la ville et la civilité de l'utilisateur</li>
+                <li>Afficher la liste des commandes avec leurs produits</li>
+            </ol>
+        </div>
+    </section>
+
+</section>
