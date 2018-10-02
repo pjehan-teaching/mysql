@@ -1,0 +1,55 @@
+<section id="sub-queries">
+
+    <section>
+        <h2>Les sous-requêtes</h2>
+    </section>
+
+    <section>
+        <h3>Dans une requête SELECT</h3>
+        <p>Les sous-requêtes peuvent être utilisées dans les requêtes SELECT lorsqu'il n'est pas possible de récupérer les résultats souhaités à l'aide d'une requête simple.</p>
+        <p>Par exemple, pour récupérer le montant moyen des commandes par utilisateurs, vous ne pouvez pas utiliser la requête suivante :</p>
+        <pre><code class="language-sql">SELECT utilisateur.*, AVG(qte * prix) AS montant_moyen
+FROM utilisateur
+INNER JOIN commande ON commande.utilisateur_id = utilisateur.id
+INNER JOIN produit_has_commande ON produit_has_commande.commande_id = commande.id
+GROUP BY utilisateur.id;</code></pre>
+        <p>Cette requête retourne en réalité le montant moyen de chaque ligne de commande.</p>
+    </section>
+
+    <section>
+        <h3>Dans une requête SELECT</h3>
+        <p>Pour récupérer le résultat attendu, il faudrait calculer le montant total de chaque commande puis ensuite faire une moyenne de ce montant en regroupant par utilisateur.</p>
+        <p>Nous pouvons dans un premier temps écrire la première requête :</p>
+        <pre><code class="language-sql">SELECT commande.utilisateur_id, SUM(prix * qte) AS montant
+FROM commande
+INNER JOIN produit_has_commande ON produit_has_commande.commande_id = commande.id
+GROUP BY commande.id;</code></pre>
+        <p>Puis utiliser les résultats de cette requête dans une jointure :</p>
+        <pre><code class="language-sql">SELECT utilisateur.*, AVG(commande.montant) AS montant_moyen
+FROM utilisateur
+INNER JOIN (
+	SELECT commande.utilisateur_id, SUM(prix * qte) AS montant
+    FROM commande
+	INNER JOIN produit_has_commande ON produit_has_commande.commande_id = commande.id
+    GROUP BY commande.id
+) AS commande ON commande.utilisateur_id = utilisateur.id
+GROUP BY utilisateur.id;</code></pre>
+    </section>
+
+    <section>
+        <h3>Dans la clause WHERE</h3>
+        <p>Généralement, l'utilisation de sous-requête est nécessaire lorsque vous souhaitez effectuer une double agrégation de données (la moyenne d'une somme par exemple).</p>
+        <p>Il est également possible d'utiliser une sous-requête dans la clause WHERE :</p>
+        <pre><code class="language-sql">SELECT *
+FROM commande
+WHERE commande.moyen_paiement_id IN (
+	SELECT moyen_paiement.id
+	FROM moyen_paiement
+	INNER JOIN commande ON commande.moyen_paiement_id = moyen_paiement.id
+	GROUP BY moyen_paiement.id
+	HAVING COUNT(commande.id) > 120
+);</code></pre>
+        <p>Cette requête permet de récupérer la liste des commandes ayant été payées avec un moyen de paiement fortement utilisé (+ de 120 commandes).</p>
+    </section>
+
+</section>

@@ -1,0 +1,30 @@
+<section id="views">
+
+    <section>
+        <h2>Les vues</h2>
+    </section>
+
+    <section>
+        <h3>Créer une vue</h3>
+        <p>Les vues sont des tables virtuelles générées à partir d'une requête SELECT.</p>
+        <p>Une vue peut donc retourner des données traitées et provenant de tables différentes.</p>
+        <pre><code class="language-sql">CREATE OR REPLACE VIEW utilisateur_extended AS
+SELECT *,
+    CONCAT(nom, ' ', prenom) AS fullname,
+    DATE_FORMAT(date_naissance, '%d %M %Y') AS date_naissance_format
+FROM utilisateur</code></pre>
+    </section>
+
+    <section>
+        <h3>Utiliser une vue</h3>
+        <p>Les vues s'utilisent comme des tables classiques :</p>
+        <pre><code class="language-sql">SELECT * FROM utilisateur_extended;</code></pre>
+    </section>
+
+    <section>
+        <h3>Supprimer une vue</h3>
+        <p>Pour supprimer une vue, vous pouvez utiliser la l'instruction ci-dessous :</p>
+        <pre><code class="language-sql">DROP VIEW utilisateur_extended;</code></pre>
+    </section>
+
+</section>

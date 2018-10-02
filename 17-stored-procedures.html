@@ -1,0 +1,91 @@
+<section id="stored-procedures">
+
+    <section>
+        <h2>Les procédures stockées</h2>
+    </section>
+
+    <section>
+        <h3>Qu'est-ce qu'une procédure stockée ?</h3>
+        <p>Une procédure stockée est un ensemble d'instructions que l'on peut exécuter de façon similaire à une fonction.</p>
+        <p>Il sera donc possible d'appeler une procédure stockée et de lui envoyer des paramètres :</p>
+        <pre><code class="language-sql">CALL ma_procedure_stockee(10, 'test');</code></pre>
+        <p>Les procédures stockées pourront donc contenir les logiques métiers qui seront utilisées par la suite dans des applications.</p>
+    </section>
+
+    <section>
+        <h3>Pros</h3>
+        <ul>
+            <li>Code centralisé au niveau de la base de données</li>
+            <li>Possibilité d'appeler la même procédure stockée depuis différentes applications</li>
+            <li>Plus rapide</li>
+            <li>Plus sécurisé (possibilité de restreindre les accès uniquement aux procédures stockées)</li>
+            <li>Possibilité d'utiliser le système de transaction du langage SQL permettant d'assurer l'atomicité des données</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Cons</h3>
+        <ul>
+            <li>Difficulté pour le versionning du code source</li>
+            <li>Correction des bugs plus compliquée</li>
+            <li>Ne respecte pas le schéma d'application N-tier</li>
+            <li>Demande plus de travail au serveur de base de données</li>
+            <li>Le SQL n'est pas toujours un langage adapté pour certaines tâches (recursivité par exemple)</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Le délimiteur</h3>
+        <p>Une procédure stockée pouvant être composée de plusieurs instructions, il sera nécessaire de changer le délimiteur pour faciliter leur écriture.</p>
+        <pre><code class="language-sql">DELIMITER //</code></pre>
+        <p>A présent, le caractère "//" permettra de séparer nos instructions et nous pourrons utiliser le point virgule dans notre procédure stockée.</p>
+    </section>
+
+    <section>
+        <h3>Création d'une procédure stockée</h3>
+        <p>Nous pouvons créer une procédure stockée de cette façon :</p>
+        <pre><code class="language-sql">DROP PROCEDURE IF EXISTS update_product_price;
+
+DELIMITER //
+
+CREATE PROCEDURE update_product_price()
+BEGIN
+    UPDATE produit SET prix = prix + 2 WHERE id = 1;
+END//
+
+DELIMITER ;</code></pre>
+        <p>Lorsque cette procédure est appelée, le prix du produit 1 augmente de 2€.</p>
+    </section>
+
+    <section>
+        <h3>Paramètres</h3>
+        <p>Il est possible de définir plusieurs paramètres sur une procédure stockée. De plus, ces paramètres peuvent avoir 3 types différents :</p>
+        <ul>
+            <li><strong>IN</strong> (défaut) : Le paramètre est en envoyé à la procédure</li>
+            <li><strong>OUT</strong> : Le paramètre sera modifié par la procédure et aura une valeur initiale à NULL</li>
+            <li><strong>INOUT</strong> : Le paramètre est envoyé à la procédure qui pourra ensuite le modifier pour le renvoyer</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Paramètres</h3>
+        <pre><code class="language-sql">CREATE PROCEDURE update_product_price(IN produit_id INT, IN difference DECIMAL, OUT nouveau_prix DECIMAL)
+BEGIN
+    UPDATE produit SET prix = prix + difference WHERE id = produit_id;
+    SELECT prix INTO nouveau_prix FROM produit WHERE id = produit_id;
+END//</code></pre>
+    </section>
+
+    <section>
+        <h3>Variables</h3>
+    </section>
+
+    <section>
+        <h3>Transactions</h3>
+    </section>
+
+    <section>
+        <h3>Tables temporaires</h3>
+    </section>
+
+</section>

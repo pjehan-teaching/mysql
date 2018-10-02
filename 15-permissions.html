@@ -1,0 +1,81 @@
+<section id="permissions">
+
+    <section>
+        <h2>Gestion des permissions</h2>
+    </section>
+
+    <section>
+        <h3>Créer un utilisateur</h3>
+        <p>Afin de restreindre les accès de notre serveur de base de données, nous allons commencer par créer un nouvel utilisateur :</p>
+        <pre><code class="language-sql">CREATE USER 'monutilisateur'@'localhost' IDENTIFIED BY 'monmotdepasse';</code></pre>
+        <p>Un nouvel utilisateur est alors créé mais celui-ci ne dispose d'aucun droit.</p>
+        <p>Pour supprimer un utilisateur, vous opuvez exécuter la commande suivante :</p>
+        <pre><code class="language-sql">DROP USER 'monutilisateur'@'localhost';</code></pre>
+    </section>
+
+    <section>
+        <h3>Gestion des droits</h3>
+        <p>Il est possible de définir les droits ci-dessous pour un utilisateur sur chaque table.</p>
+        <table>
+            <thead>
+            <tr>
+                <th>Droit</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><code class="language-sql">ALL PRIVILEGES</code></td>
+                <td>Accès total</td>
+            </tr>
+            <tr>
+                <td><code class="language-sql">CREATE</code></td>
+                <td>Créer des tables ou des base de données</td>
+            </tr>
+            <tr>
+                <td><code class="language-sql">DROP</code></td>
+                <td>Supprimer des tables ou des base de données</td>
+            </tr>
+            <tr>
+                <td><code class="language-sql">SELECT</code></td>
+                <td>Rechercher des données</td>
+            </tr>
+            <tr>
+                <td><code class="language-sql">INSERT</code></td>
+                <td>Insérer des données</td>
+            </tr>
+            <tr>
+                <td><code class="language-sql">UPDATE</code></td>
+                <td>Modifier des données</td>
+            </tr>
+            <tr>
+                <td><code class="language-sql">DELETE</code></td>
+                <td>Supprimer des données</td>
+            </tr>
+            <tr>
+                <td><code class="language-sql">GRANT OPTION</code></td>
+                <td>Accorder des permissions à d'autres utilisateurs</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h3>Gestion des droits</h3>
+        <p>L'instruction ci-dessous permet d'accorder les droits en lecture sur la table 'article' :</p>
+        <pre><code class="language-sql">GRANT SELECT ON blog.article TO 'monutilisateur'@'localhost’;</code></pre>
+        <p>L'instruction ci-dessous permet d'accorder l'ensemble des droits sur l'ensembles des base de données du serveur :</p>
+        <pre><code class="language-sql">GRANT ALL PRIVILEGES ON *.* TO 'monutilisateur'@'localhost';</code></pre>
+        <p>Vous pouvez également refraîchir les permissions pour vous assurer que celles-ci ont bien été mises à jour :</p>
+        <pre><code class="language-sql">FLUSH PRIVILEGES;</code></pre>
+    </section>
+
+    <section>
+        <h3>Gestion des droits</h3>
+        <p>Vous pouvez afficher les droits d'un utilisateur avec la commande suivante :</p>
+        <pre><code class="language-sql">SHOW GRANTS FOR 'monutilisateur'@'localhost';</code></pre>
+        <p>Et retirer des droits avec la commande ci-dessous :</p>
+        <pre><code class="language-sql">REVOKE SELECT ON *.* FROM 'monutilisateur'@'localhost';</code></pre>
+    </section>
+
+</section>
