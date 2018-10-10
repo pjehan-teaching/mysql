@@ -69,23 +69,167 @@ DELIMITER ;</code></pre>
 
     <section>
         <h3>Paramètres</h3>
-        <pre><code class="language-sql">CREATE PROCEDURE update_product_price(IN produit_id INT, IN difference DECIMAL, OUT nouveau_prix DECIMAL)
+        <p>Nous pouvons par exemple ajouter 3 paramètres à notre procédure pour envoyer l'identifiant du produit, la différence à appliquer et un dernier paramètre pour récupérer le nouveau prix :</p>
+        <pre><code class="language-sql">CREATE PROCEDURE update_product_price(IN ProduitId INT, IN Difference DECIMAL, OUT NouveauPrix DECIMAL(10,2))
 BEGIN
-    UPDATE produit SET prix = prix + difference WHERE id = produit_id;
-    SELECT prix INTO nouveau_prix FROM produit WHERE id = produit_id;
+    UPDATE produit SET prix = prix + Difference WHERE id = ProduitId;
+    SELECT prix INTO NouveauPrix FROM produit WHERE id = ProduitId;
 END//</code></pre>
+        <p>Nous pourrons ensuite appeler notre procédure stockée de cette façon :</p>
+        <pre><code class="language-sql">CALL update_product_price(1, 2, @prix);</code></pre>
+        <p><code class="language-sql">@prix</code> est une variable qui contiendra le nouveau prix du produit.</p>
     </section>
 
     <section>
         <h3>Variables</h3>
+        <p>Comme nous l'avons vu dans l'exemple précédent, il est possible de créer des variables avec le langage SQL.</p>
+        <p>Les variables en SQL peuvent avoir une portée (scope) différente :</p>
+        <pre><code class="language-sql">ma_variable // Variable locale
+@ma_variable // Variable utilisateur
+@@ma_variable // Variable serveur</code></pre>
+    </section>
+
+    <section>
+        <h3>Variables locales</h3>
+        <p>Les variables locales peuvent être utilisées dans des procédures stockées ou des triggers.</p>
+        <p>Elles peuvent être déclarées en tant que paramètre d'une fonction ou bien de la façon suivante :</p>
+        <pre><code class="language-sql">DECLARE ma_variable INT unsigned DEFAULT 1;</code></pre>
+    </section>
+
+    <section>
+        <h3>Variables utilisateur</h3>
+        <p>Les variables utilisateur ont une portée limitée au client les ayant créées.</p>
+        <p>Elles n'ont pas besoin d'être déclarées et leur valeur peut être modifiée de 2 façons :</p>
+        <pre><code class="language-sql">SET @ma_variable = 1;
+SELECT @ma_variable := 1;</code></pre>
+    </section>
+
+    <section>
+        <h3>Variables système</h3>
+        <p>Les variables système peuvent avoir une portée globale ou par session.</p>
+        <p>Il est possible d'afficher l'ensemble des variables systèmes avec l'instruction suivante :</p>
+        <pre><code class="language-sql">SHOW VARIABLES;</code></pre>
+        <p>Les variables système peuvent être déclarées au démarrage de serveur en ligne de commande ou bien via les instructions suivantes :</p>
+        <pre><code class="language-sql">SET GLOBAL max_connections = 1000;
+SET @@global.max_connections = 1000;</code></pre>
+        <pre><code class="language-sql">SET SESSION sql_mode = 'TRADITIONAL';
+SET @@session.sql_mode = 'TRADITIONAL';
+SET @@sql_mode = 'TRADITIONAL';</code></pre>
+    </section>
+
+    <section>
+        <h3>Conditions</h3>
+        <p>Il est possible d'ecrire des conditions avec le langage SQL dans des procédures stockées ou des triggers :</p>
+        <pre><code class="language-sql">CREATE PROCEDURE order_product(IN ProduitId INT)
+BEGIN
+    DECLARE Quantite INT DEFAULT 0;
+    DECLARE QuantiteOrder INT DEFAULT 0;
+    SET Quantite = (SELECT qte FROM produit WHERE id = ProduitId);
+
+    IF Quantite < 10 THEN
+        SET QuantiteOrder = 10;
+    ELSEIF Quantite < 20 THEN
+        SET QuantiteOrder = 5;
+    ELSE
+        SET QuantiteOrder = 2;
+    END IF;
+
+    UPDATE produit SET qte = qte + QuantiteOrder WHERE id = ProduitId;
+END//</code></pre>
+    </section>
+
+    <section>
+        <h3>Cursors</h3>
+        <p>Afin de pouvoir traiter plus en détail les résultats d'une requête SQL, il est également possible d'utiliser un curseur pour itérer sur les résultats.</p>
+        <p>Pour utiliser un curseur, nous utiliseront toujours le process suivant :</p>
+        <img src="assets/images/cursor.png" alt="Cursor">
+    </section>
+
+    <section>
+        <h3>Cursors</h3>
+        <pre><code class="language-sql">CREATE PROCEDURE generate_lignes_commande()
+BEGIN
+    DECLARE v_done INT DEFAULT FALSE;
+    DECLARE v_commande_id BIGINT;
+    DECLARE v_id BIGINT;
+    DECLARE v_prix DECIMAL(10,2);
+    DECLARE v_cursor CURSOR FOR SELECT id, prix FROM produit;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET v_done = TRUE;
+
+    OPEN v_cursor;
+
+    v_loop: LOOP
+		FETCH v_cursor INTO v_id, v_prix;
+        IF v_done THEN
+			LEAVE v_loop;
+        END IF;
+        SET v_commande_id = (SELECT id FROM commande WHERE id NOT IN (SELECT commande_id FROM produit_has_commande WHERE produit_id = v_id) ORDER BY RAND() LIMIT 1);
+        INSERT INTO produit_has_commande (produit_id, commande_id, qte, prix)
+			VALUES (v_id, v_commande_id, FLOOR(RAND() * 20), v_prix);
+    END LOOP;
+
+    CLOSE v_cursor;
+END//</code></pre>
     </section>
 
     <section>
         <h3>Transactions</h3>
+        <p>Une transaction est un ensemble de manipulations en base de données regroupées dans une unité de traitement.</p>
+        <p>Une transaction ne pourra se terminer que si l'ensemble des opérations s'effectuent avec succès.</p>
+        <p>Une transaction démarre avec les mots clés <code class="language-sql">START TRANSACTION</code> et se termine avec l'instruction <code class="language-sql">COMMIT</code> pour valider une transaction ou <code class="language-sql">ROLLBACK</code> pour l'annuler.</p>
+        <footer>
+            <a href="https://dev.mysql.com/doc/refman/5.6/en/innodb-autocommit-commit-rollback.html" class="info">Par défaut le mode autocommit de MySQL est activé</a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Transactions</h3>
+        <p>L'exemple ci-dessous permet de créer une nouvelle commande et d'annuler la création si la quantité en stock n'est pas assez importante.</p>
+        <pre><code class="language-sql">CREATE PROCEDURE create_commande(IN v_reference VARCHAR(255), IN v_utilisateur BIGINT, IN v_moyen_paiement_id BIGINT, IN v_produit_id BIGINT, IN v_qte INT)
+BEGIN
+	DECLARE v_commande_id BIGINT DEFAULT NULL;
+    DECLARE v_qte_stock INT DEFAULT 0;
+    DECLARE v_prix DECIMAL(10,2) DEFAULT 0;
+
+	START TRANSACTION;
+        INSERT INTO commande (reference, date_creation, utilisateur_id, moyen_paiement_id)
+            VALUES (v_reference, NOW(), v_utilisateur, v_moyen_paiement_id);
+        SET v_commande_id = LAST_INSERT_ID();
+        SET v_prix = (SELECT prix FROM produit WHERE id = v_produit_id);
+        INSERT INTO produit_has_commande (produit_id, commande_id, qte, prix)
+            VALUES (v_produit_id, v_commande_id, v_qte, 240);
+        UPDATE produit SET qte = qte - v_qte WHERE id = v_produit_id;
+        SET v_qte_stock = (SELECT qte FROM produit WHERE id = v_produit_id);
+        IF (v_qte_stock < 0) THEN
+            ROLLBACK;
+        END IF;
+	COMMIT;
+END//</code></pre>
     </section>
 
     <section>
         <h3>Tables temporaires</h3>
+        <p>Une table temporaire permet de stocker temporairement des données dans une table pour effectuer des traitements ultérieurement.</p>
+        <p>Une table temporaire n'est visible qu'au niveau de la session et est supprimée lorsque la session est fermée.</p>
+        <pre><code class="language-sql">CREATE TEMPORARY TABLE top10utilisateurs
+    SELECT utilisateur.*, SUM(qte * prix) AS montant_total
+    FROM utilisateur
+    INNER JOIN commande ON commande.utilisateur_id = utilisateur.id
+    INNER JOIN produit_has_commande ON produit_has_commande.commande_id = commande.id
+    GROUP BY utilisateur.id
+    ORDER BY montant_total DESC
+    LIMIT 10;</code></pre>
+    </section>
+
+    <section>
+        <h3>Exercice</h3>
+        <div class="instructions">
+            <ol>
+                <li>Créez une procédure stockée pour supprimer une commande</li>
+                <li>Lors de la suppression, assurez-vous de restaurer la quantité des produits en stock</li>
+                <li>Utilisez le système de transaction pour sécuriser l'opération</li>
+            </ol>
+        </div>
     </section>
 
 </section>

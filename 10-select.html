@@ -97,7 +97,7 @@ WHERE nom = 'Dupont' AND date_de_naissance > '1980-01-01';</code></pre>
     <section>
         <h3>L'opérateur LIKE</h3>
         <p>L'opérateur LIKE permet d'effectuer des recherches partielles sur des chaînes de caractères.</p>
-        <p>Le caractère <code class="language-sql">%</code> est un "wildcard" représentant zéro, un ou plusieurs caractères tandis que caractère <code class="language-sql">_</code> représente un seul caractère.</p>
+        <p>Le caractère <code class="language-sql">%</code> est un "wildcard" représentant zéro, un ou plusieurs caractères tandis que le caractère <code class="language-sql">_</code> représente un seul caractère.</p>
         <pre><code class="language-sql">SELECT *
 FROM ville
 WHERE libelle LIKE 'R%'; -- Villes commençant par la lettre R
@@ -131,7 +131,7 @@ WHERE date_naissance BETWEEN '2012-03-09' AND '2013-09-09';</code></pre>
     <section>
         <h3>L'opérateur IN</h3>
         <p>L'opérateur IN permet de rechercher des données comprises dans une liste.</p>
-        <p>C'est opérateur est particulièrement utile lorsqu'il est utilisé avec des sous-requêtes.</p>
+        <p>Cet opérateur est particulièrement utile lorsqu'il est utilisé avec des sous-requêtes.</p>
         <pre><code class="language-sql">SELECT *
 FROM ma_table
 WHERE nom IN ('Dupont', 'Briand');</code></pre>

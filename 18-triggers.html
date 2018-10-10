@@ -4,4 +4,47 @@
         <h2>Les triggers</h2>
     </section>
 
+    <section>
+        <h3>Qu'est-ce qu'un trigger ?</h3>
+        <p>Les triggers (déclencheurs) permettent d'effectuer des traitements lors d'une opération sur une table.</p>
+        <p>Il est donc possible de définir un trigger sur les opérations <code class="language-sql">INSERT</code>, <code class="language-sql">UPDATE</code> ou <code class="language-sql">DELETE</code>.</p>
+        <p>Un trigger peut être déclenché avant (<code class="language-sql">BEFORE</code>) ou après (<code class="language-sql">AFTER</code>) une opération.</p>
+        <p>Enfin, il est possible d'accéder aux données traitées dans les tables <code class="language-sql">NEW</code> (sur les opérations INSERT et UPDATE) et <code class="language-sql">OLD</code> (sur les opérations UPDATE et DELETE).</p>
+    </section>
+
+    <section>
+        <h3>Créer un trigger</h3>
+        <pre><code class="language-sql">DELIMITER //
+CREATE TRIGGER insert_commande_date BEFORE INSERT ON commande
+FOR EACH ROW
+BEGIN
+    SET NEW.date_creation = NOW();
+END;//
+DELIMITER ;</code></pre>
+    </section>
+
+    <section>
+        <h3>Gestion des triggers conccurents</h3>
+        <p>Depuis la version 5.7.2 de MySQL, il est maintenant possible de créer plusieurs triggers sur la même opération.</p>
+        <p>Pour cela, les mots clés <code class="language-sql">FOLLOWS</code> et <code class="language-sql">PRECEDES</code> permettent de définir si le trigger doit être déclenché respectivement après ou avant un autre trigger :</p>
+        <pre><code class="language-sql">DELIMITER //
+CREATE TRIGGER insert_commande_ref BEFORE INSERT ON commande
+FOR EACH ROW FOLLOWS insert_commande_date
+BEGIN
+    SET NEW.reference = CONCAT('#', MD5(CONCAT(NEW.date_creation, RAND())));
+END;//
+DELIMITER ;</code></pre>
+    </section>
+
+    <section>
+        <h3>Exercice</h3>
+        <div class="instructions">
+            <ol>
+                <li>Créez une table pour gérer l'historique des produits</li>
+                <li>Lors de la modification d'un produit, enregistrer l'état du produit dans la table d'histo</li>
+                <li>Lors de l'insertion, la mise à jour ou la suppression d'une ligne produit, mettre à jour la quantité en stock en conséquence</li>
+            </ol>
+        </div>
+    </section>
+
 </section>
