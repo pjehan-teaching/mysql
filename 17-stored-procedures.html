@@ -93,7 +93,7 @@ END//</code></pre>
         <h3>Variables locales</h3>
         <p>Les variables locales peuvent être utilisées dans des procédures stockées ou des triggers.</p>
         <p>Elles peuvent être déclarées en tant que paramètre d'une fonction ou bien de la façon suivante :</p>
-        <pre><code class="language-sql">DECLARE ma_variable INT unsigned DEFAULT 1;</code></pre>
+        <pre><code class="language-sql">DECLARE ma_variable INT UNSIGNED DEFAULT 1;</code></pre>
     </section>
 
     <section>
@@ -212,13 +212,13 @@ END//</code></pre>
         <p>Une table temporaire permet de stocker temporairement des données dans une table pour effectuer des traitements ultérieurement.</p>
         <p>Une table temporaire n'est visible qu'au niveau de la session et est supprimée lorsque la session est fermée.</p>
         <pre><code class="language-sql">CREATE TEMPORARY TABLE top10utilisateurs
-    SELECT utilisateur.*, SUM(qte * prix) AS montant_total
-    FROM utilisateur
-    INNER JOIN commande ON commande.utilisateur_id = utilisateur.id
-    INNER JOIN produit_has_commande ON produit_has_commande.commande_id = commande.id
-    GROUP BY utilisateur.id
-    ORDER BY montant_total DESC
-    LIMIT 10;</code></pre>
+SELECT utilisateur.*, SUM(qte * prix) AS montant_total
+FROM utilisateur
+INNER JOIN commande ON commande.utilisateur_id = utilisateur.id
+INNER JOIN produit_has_commande ON produit_has_commande.commande_id = commande.id
+GROUP BY utilisateur.id
+ORDER BY montant_total DESC
+LIMIT 10;</code></pre>
     </section>
 
     <section>

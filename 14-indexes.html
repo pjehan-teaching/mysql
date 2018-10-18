@@ -29,7 +29,7 @@ CREATE UNIQUE INDEX idx_uq_email ON utilisateur (email); -- Optimisation des req
     <section>
         <h3>Les index FULLTEXT</h3>
         <p>Pour effectuer des recherches avancées sur des champs textes, il est possible de définir des index de type FULLTEXT :</p>
-        <pre><code class="language-sql">ALTER TABLE article ADD INDEX (titre, contenu);</code></pre>
+        <pre><code class="language-sql">ALTER TABLE article ADD FULLTEXT (titre, contenu);</code></pre>
         <p>Il sera alors possible d'utiliser les fonctions <code class="language-sql">MATCH</code> et <code class="language-sql">AGAINST</code> pour récupérer un score lors d'une recherche :</p>
         <pre><code class="language-sql">SELECT *, MATCH(titre, contenu) AGAINST ('recherche fulltext') AS score
 FROM article</code></pre>
