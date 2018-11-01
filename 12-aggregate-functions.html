@@ -53,7 +53,7 @@
         <div class="instructions">
             <ol>
                 <li>Rechercher le nombre d’utilisateurs présent dans la base de données (<strong>600 résultats</strong>)</li>
-                <li>Rechercher le nombre total de commandes réalisées cette année (<strong>40 résultats</strong>)</li>
+                <li>Rechercher le nombre total de commandes réalisées en 2015 (<strong>40 résultats</strong>)</li>
                 <li>Rechercher le prix moyen des produits en stock (<strong>254.98</strong>)</li>
                 <li>Rechercher le prix du produit le plus cher en stock (<strong>499.18 résultats</strong>)</li>
                 <li>Rechercher le prix moyen des commandes (<strong>275.56</strong>)</li>
@@ -63,7 +63,7 @@
 
     <section>
         <h3>la clause GROUP BY</h3>
-        <p>La clause GROUP BY, située après la clause ORDER BY, nous permettra de définir sur quel(s) champ(s) effectuer un regroupement.</p>
+        <p>La clause GROUP BY, située avant la clause ORDER BY, nous permettra de définir sur quel(s) champ(s) effectuer un regroupement.</p>
         <p>Cette clause est très souvent utilisée en complément de fonctions d'agrégations pour permettre de retourner plusieurs lignes.</p>
         <pre><code class="language-sql">SELECT *
 FROM ma_table
@@ -74,7 +74,7 @@ GROUP BY colonne_1, colonne_2</code></pre>
         <h3>Exercices</h3>
         <div class="instructions">
             <ol>
-                <li>Rechercher la liste des moyens de paiement avec le nombre de commandes associé</li>
+                <li>Rechercher la liste des moyens de paiement avec le nombre de commandes associées</li>
                 <li>Rechercher la liste des commandes en affichant le nombre de produits et le montant total de la commande</li>
                 <li>Rechercher l'utilisateur ayant dépensé le plus d'argent (<strong>Rebecca Powell</strong>)</li>
             </ol>

@@ -19,7 +19,7 @@ CREATE TRIGGER insert_commande_date BEFORE INSERT ON commande
 FOR EACH ROW
 BEGIN
     SET NEW.date_creation = NOW();
-END;//
+END//
 DELIMITER ;</code></pre>
     </section>
 
@@ -32,7 +32,7 @@ CREATE TRIGGER insert_commande_ref BEFORE INSERT ON commande
 FOR EACH ROW FOLLOWS insert_commande_date
 BEGIN
     SET NEW.reference = CONCAT('#', MD5(CONCAT(NEW.date_creation, RAND())));
-END;//
+END//
 DELIMITER ;</code></pre>
     </section>
 
