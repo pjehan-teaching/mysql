@@ -1,0 +1,25 @@
+.reveal {
+
+  section {
+    blockquote {
+      background-color: white;
+      border-left: #082b36 2px solid;
+      &:before {
+        content: '💬';
+        position: absolute;
+        right: 10px;
+        top: 15px;
+        color: #ccc;
+        font-size: 2em;
+      }
+      cite {
+        display: block;
+        color: #969696;
+        &:before {
+          content: '-';
+        }
+      }
+    }
+  }
+
+}
