@@ -78,4 +78,13 @@
         <pre><code class="language-sql">REVOKE SELECT ON *.* FROM 'monutilisateur'@'localhost';</code></pre>
     </section>
 
+    <section>
+        <h3>Sécuriser les connexions externes</h3>
+        <p>Par défaut, il n'est pas possible de se connecter depuis l'extérieur à un serveur MySQL avec l'utilisateur <code>root</code>.</p>
+        <p>Cependant, il sera possible de se connecter avec un autre utilisateur, par exemple avec la commande suivante :</p>
+        <pre><code class="language-shell">mysql -h 125.23.12.105 -P 3306 -u root -p</code></pre>
+        <p>Pour éviter cela, il est possible de modifier le fichier de configuration <code>/etc/mysql/my.cnf</code> :</p>
+        <pre><code class="language-shell">bind-address=127.0.0.1</code></pre>
+    </section>
+
 </section>
