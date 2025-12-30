@@ -23,8 +23,8 @@ DROP DATABASE IF EXISTS ma_base;
             </tr>
             <tr>
                 <td>VARCHAR</td>
-                <td>Chaine de caractères (string) de taille variable. de 0 à 255 caractères (au dessus, choisir type
-                    TEXT)
+                <td>Chaine de caractères (string) de taille variable. de 0 à 65 535 caractères (mais préférer le type TEXT au dessus de
+                    55 caractères)
                 </td>
             </tr>
             <tr>
@@ -36,6 +36,10 @@ DROP DATABASE IF EXISTS ma_base;
                 <td>de 0 à 4 294 967 295 caractères</td>
             </tr>
         </table>
+        <p>
+            Contraitement au type TEXT, le type VARCHAR est comptabilisé dans la limite de taille totale d'une ligne
+            (65 535 octets = ensemble des données d'une ligne).
+        </p>
     </section>
 
     <section>
