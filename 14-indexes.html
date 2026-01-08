@@ -6,8 +6,8 @@
 
     <section>
         <h3>Qu'est ce qu'un index ?</h3>
-        <p>Afin de permettre d'optimiser les performances, la plupart des SGBD permettrent de définir des index sur des colonnes.</p>
-        <p>Les index créés en mémoire des tableaux parallèles permettant d'optimiser les recherches en organisant les données.</p>
+        <p>Afin de permettre d'optimiser les performances, la plupart des SGBD permettent de définir des index sur des colonnes.</p>
+        <p>Les index créent en mémoire des structures de données permettant d'optimiser les recherches en organisant les données.</p>
         <img src="assets/images/indexes.png" alt="MySQL Index">
         <footer>
             <a href="#" style="font-size: 0.8em" class="warning">Les index entraînent des ralentissements sur les opérations d'écriture</a>
@@ -32,7 +32,7 @@ CREATE UNIQUE INDEX idx_uq_email ON utilisateur (email); -- Optimisation des req
         <pre><code class="language-sql">ALTER TABLE article ADD FULLTEXT (titre, contenu);</code></pre>
         <p>Il sera alors possible d'utiliser les fonctions <code class="language-sql">MATCH</code> et <code class="language-sql">AGAINST</code> pour récupérer un score lors d'une recherche :</p>
         <pre><code class="language-sql">SELECT *, MATCH(titre, contenu) AGAINST ('recherche fulltext') AS score
-FROM article</code></pre>
+FROM article;</code></pre>
         <footer>
             <a href="https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html" target="_blank" class="info">MySQL FULLTEXT</a>
         </footer>
